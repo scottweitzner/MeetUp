@@ -1,25 +1,70 @@
 {% extends "layout.html" %}
 {% block body %}
+<script>
+    $(document).ready(function(){
+      $('.carousel').carousel();
+    });
+</script>
 
-<h2>Home</h2>
-  {% if session.username %}
-    <h3>Share New Post</h3>
-    <form action="{{ url_for('add_post') }}" method="post">
-        <dl>
-            <dt>Title:</dt>
-            <dd><input type="text" size="30" name="title"></dd>
-            <dt>Tags (separated by commas):</dt>
-            <dd><input type="text" size="30" name="tags"></dd>
-            <dt>Text:</dt>
-            <dd><textarea name="text" rows="5" cols="40"></textarea></dd>
-        </dl>
-        <input type="submit" value="Share">
-    </form>
-  {% endif %}
+    <style>
+    .carousel-item{
+        min-height: 350px;
+        min-width: 400px;
+    }
 
-<br>
+    </style>
 
-<h3>Today's Recent Posts</h3>
-{% include "display_posts.html" %}
 
+<div class="container">
+<br style="line-height: 50px">
+<div class="carousel" data-indicators="true" style="min-height: 500px">
+    <h4 class="center-align">Your Events</h4>
+    <a class="carousel-item card">
+        <div class="card-content">
+             <span class="card-title activator grey-text text-darken-4">Event Title<i class="material-icons right">more_vert</i></span>
+            <p><b>Type: </b></p>
+            <p><b>Description:</b></p>
+            <p><b>Date/Time:</b></p>
+        </div>
+        <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Event Title<i class="material-icons right">close</i></span>
+            <p><b>Description:</b> Desciption about the event goes here.</p>
+            <p><b>Date/Time:</b></p>
+            <p><b>Host:</b></p>
+            <p><b>Availability:</b></p>
+        </div>
+    </a>
+    <a class="carousel-item card">
+        <div class="card-content">
+             <span class="card-title activator grey-text text-darken-4">Event Title<i class="material-icons right">more_vert</i></span>
+            <p><b>Type: </b></p>
+            <p><b>Description:</b></p>
+            <p><b>Date/Time:</b></p>
+        </div>
+        <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Event Title<i class="material-icons right">close</i></span>
+            <p><b>Description:</b> Desciption about the event goes here.</p>
+            <p><b>Date/Time:</b></p>
+            <p><b>Host:</b></p>
+            <p><b>Availability:</b></p>
+        </div>
+    </a>
+    <a class="carousel-item card">
+        <div class="card-content">
+             <span class="card-title activator grey-text text-darken-4">Event Title<i class="material-icons right">more_vert</i></span>
+            <p><b>Type: </b></p>
+            <p><b>Description:</b></p>
+            <p><b>Date/Time:</b></p>
+        </div>
+        <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Event Title<i class="material-icons right">close</i></span>
+            <p><b>Description:</b> Desciption about the event goes here.</p>
+            <p><b>Date/Time:</b></p>
+            <p><b>Host:</b></p>
+            <p><b>Availability:</b></p>
+        </div>
+    </a>
+  </div>
+</div>
 {% endblock %}
+

@@ -4,8 +4,8 @@
     <!-- JQuery -->
     <script src="https://cdn.jsdelivr.net/jquery/3.2.1/jquery.min.js"></script>
 
-    <!-- Materialize CSS: Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+    <!-- Materialize JS -->
+    <script src=" {{ url_for('static', filename='materialize.js') }} "></script>
 
     <!-- Materialize CSS: Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
@@ -20,17 +20,30 @@
 
 <nav class="blue lighten-2">
     <div class="nav-wrapper">
-        <a class="right" style="padding-right:25px; font-size:36px"> Beta </a>
-        <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <a class="left" style="padding-left:25px; font-size:36px"> Beta </a>
+        <ul class="right">
             <li><a href="{{ url_for('index') }}">Home</a></li>
             {% if not session.user %}
                 <li><a href="{{ url_for('login') }}">Login</a></li>
             {% else %}
                 <li><a href="{{ url_for('profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('create_event') }}">Create Event</a></li>
                 <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% endif %}
         </ul>
     </div>
 </nav>
+
+{# ability to display toasts message toasts if we want #}
+
+{#{% with messages = get_flashed_messages() %}#}
+{#  {% if messages %}#}
+{#    <ul class=flashes>#}
+{#    {% for message in messages %}#}
+{#      <li>{{ message }}</li>#}
+{#    {% endfor %}#}
+{#    </ul>#}
+{#  {% endif %}#}
+{#{% endwith %}#}
 
 {% block body %}{% endblock %}

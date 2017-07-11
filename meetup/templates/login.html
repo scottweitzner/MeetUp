@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
+    <script src=" {{ url_for('static', filename='utils.js') }} "></script>
+
     <br/><br/>
+
     <div class="container">
         <h3>Login</h3>
         <form class="col s12" action="{{ url_for('login') }}" method="POST">
@@ -24,6 +27,10 @@
         </form>
     </div>
 
-
+    {% if error %}
+        <script>
+            makeErrorToast('Invalid Login')
+        </script>
+    {% endif %}
 
 {% endblock %}

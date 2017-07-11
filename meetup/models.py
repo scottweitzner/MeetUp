@@ -26,6 +26,19 @@ class User:
         if user:
             return bcrypt.verify(password, user['password'])
 
+    def get_skills(self):
+        query = '''
+        MATCH (u:User)-[:KNOWS]->(s:Skill) WHERE  u.email = {email}
+        RETURN s.type
+        '''
+        return graph.run(query, email=self.email).data()
+
+    def create_event(self, title, type, date, time, max_participants, description):
+        if description is None:
+            Event = Node('Event', title=title, type=type, date=date, time=time, max_participants=max_participants, description=description)
+        else:
+            Event = Node('Event', title=title, type=type, date=date, time=time, max_participants=max_participants, description=description)
+
 
 def timestamp():
     epoch = datetime.utcfromtimestamp(0)

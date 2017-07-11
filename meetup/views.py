@@ -14,19 +14,21 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error = None
 
     if request.method == 'POST':
         email = request.form.get('email', None)
         password = request.form.get('password', None)
 
         if not User(email).verify_password(password):
+            error = "Invalid Login"
             flash('Invalid login.')
         else:
             session['user'] = email
             flash('Logged in.')
             return redirect(url_for('index'))
 
-    return render_template('login.html')
+    return render_template('login.html', error=error)
 
 
 @app.route('/logout')
@@ -86,7 +88,6 @@ def profile():
         group = user_details['group']
 
         print user_details
-        flash("HERE")
 
         return render_template(
             'profile.html',
@@ -99,9 +100,10 @@ def profile():
 @app.route('/create_event', methods=['GET', 'POST'])
 def create_event():
     if request.method == 'POST':
-        # do stuff here
+        email = session['user']
+        title = request.form.get('')
         render_template('index.html')
-    return render_template('CreateEvent.html')
+    return render_template('create_event.html')
 
 #
 # ################################################################################
