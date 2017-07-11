@@ -13,17 +13,11 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png')}}">
 
-    <!-- Chartist.js -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.0/chartist.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.0/chartist.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
 </head>
 
 <nav class="blue lighten-2">
     <div class="nav-wrapper">
-        <a class="right" style="padding-right:25px; font-size:36px"> Research Demo </a>
+        <a class="right" style="padding-right:25px; font-size:36px"> Beta </a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
             <li><a href="{{ url_for('index') }}">Home</a></li>
             {% if not session.username %}
@@ -33,7 +27,6 @@
                 <li><a href="{{ url_for('profile', username=session.username) }}">Profile</a></li>
                 <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% endif %}
-            <li><a href="{{ url_for('get_sentiment_history_search') }}">Sentiment History</a></li>
         </ul>
     </div>
 </nav>
