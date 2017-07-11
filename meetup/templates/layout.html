@@ -13,6 +13,9 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png')}}">
 
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 
 <nav class="blue lighten-2">
@@ -20,11 +23,10 @@
         <a class="right" style="padding-right:25px; font-size:36px"> Beta </a>
         <ul id="nav-mobile" class="left hide-on-med-and-down">
             <li><a href="{{ url_for('index') }}">Home</a></li>
-            {% if not session.username %}
-                <li><a href="{{ url_for('register') }}">Register</a></li>
+            {% if not session.user %}
                 <li><a href="{{ url_for('login') }}">Login</a></li>
             {% else %}
-                <li><a href="{{ url_for('profile', username=session.username) }}">Profile</a></li>
+                <li><a href="{{ url_for('profile') }}">Profile</a></li>
                 <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% endif %}
         </ul>

@@ -1,13 +1,29 @@
 {% extends "layout.html" %}
 {% block body %}
-  <h2>Login</h2>
-	<form action="{{ url_for('login') }}" method="post">
-        <dl>
-            <dt>Username:</dt>
-            <dd><input type="text" name="username"></dd>
-            <dt>Password:</dt>
-            <dd><input type="password" name="password"></dd>
-        </dl>
-        <input type="submit" value="Login">
-	</form>
+    <br/><br/>
+    <div class="container">
+        <h3>Login</h3>
+        <form class="col s12" action="{{ url_for('login') }}" method="POST">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">email</i>
+                    <input id="email" type="email" name="email" class="validate">
+                    <label for="email">Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">lock</i>
+                    <input id="password" type="password" name="password" class="validate" ">
+                    <label for="password">Password</label>
+                </div>
+            </div>
+            <button class="btn waves-effect waves-light blue lighten-2" type="submit" name="action">Login
+                <i class="material-icons right">lock_open</i>
+            </button>
+        </form>
+    </div>
+
+
+
 {% endblock %}

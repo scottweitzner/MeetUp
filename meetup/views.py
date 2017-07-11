@@ -8,50 +8,29 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    # session['username'] = 'MASTER'
     posts = []  # from the tutorial - will change
     return render_template('index.html', posts=posts)
 
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        if len(username) < 1:
-            flash('Your username must be at least one character')
-        elif len(password) < 5:
-            flash('Your password must be at least 5 characters')
-        elif not User(username).register(password):
-            flash('A user with that username already exists')
-        else:
-            session['username'] = username
-            flash('Logged in.')
-            return redirect(url_for('index'))
-
-    return render_template('register.html')
-
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
 
-        if not User(username).verify_password(password):
-            flash('Invalid login.')
-        else:
-            session['username'] = username
-            flash('Logged in.')
-            return redirect(url_for('index'))
+    email = request.form.get('email', None)
+    password = request.form.get('password', None)
+
+    if not User(email).verify_password(password):
+        flash('Invalid login.')
+    else:
+        session['user'] = email
+        flash('Logged in.')
+        return redirect(url_for('index'))
 
     return render_template('login.html')
 
 
 @app.route('/logout')
 def logout():
-    session.pop('username', None)
+    session.pop('user', None)
     flash('Logged out.')
     return redirect(url_for('index'))
 
@@ -72,7 +51,7 @@ def logout():
 #         User(session['username']).add_post(title, tags, text)
 #
 #     return redirect(url_for('index'))
-#
+
 #
 # @app.route('/like_post/<post_id>')
 # def like_post(post_id):
@@ -88,33 +67,34 @@ def logout():
 #     return redirect(request.referrer)
 #
 #
-# @app.route('/profile/<username>')
-# def profile(username):
-#     logged_in_username = session.get('username')
-#     user_being_viewed_username = username
-#
-#     user_being_viewed = User(user_being_viewed_username)
-#     posts = user_being_viewed.get_recent_posts()
-#
-#     similar = []
-#     common = []
-#
-#     if logged_in_username:
-#         logged_in_user = User(logged_in_username)
-#
-#         if logged_in_user.username == user_being_viewed.username:
-#             similar = logged_in_user.get_similar_users()
-#         else:
-#             common = logged_in_user.get_commonality_of_user(user_being_viewed)
-#
-#     return render_template(
-#         'profile.html',
-#         username=username,
-#         posts=posts,
-#         similar=similar,
-#         common=common
-#     )
-#
+
+
+@app.route('/profile')
+def profile():
+
+    current_user_email = session.get('user')
+
+    current_user = User(current_user_email)
+    user_details = current_user.find()
+
+    print(user_details)
+
+    name = user_details['name']
+    bio = user_details['bio']
+    school = user_details['school']
+    position = user_details['position']
+    group = user_details['group']
+
+    return render_template(
+        'profile.html',
+        name=name
+    )
+
+@app.route('/create_event')
+def create_event():
+    # do stuff here
+    return render_template('CreateEvent.html')
+
 #
 # ################################################################################
 # #  My Routes

@@ -4,7 +4,6 @@ from datetime import datetime
 import constants
 
 # where bulk of action takes place
-
 protocol = 'http://'
 url = 'hobby-amiglogeoeaggbkemomdkmpl.dbs.graphenedb.com:24789'
 neo4j_username = "main"
@@ -15,20 +14,12 @@ graph = Graph(protocol + url, bolt=False)
 
 
 class User:
-    def __init__(self, username):
-        self.username = username
+    def __init__(self, email):
+        self.email = email
 
     def find(self):
-        user = graph.find_one('User', 'username', self.username)
+        user = graph.find_one('User', 'email', self.email)
         return user
-
-    def register(self, password):
-        if not self.find():
-            user = Node('User', username=self.username, password=bcrypt.encrypt(password))
-            graph.create(user)
-            return True
-        else:
-            return False
 
     def verify_password(self, password):
         user = self.find()

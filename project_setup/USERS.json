@@ -1,0 +1,24 @@
+[
+  {
+    "email": "kristen.gee@blackrock.com",
+    "name": "Kristen Gee",
+    "password": "kristen",
+    "school": "University of Pennsylvania",
+    "position": "Intern",
+    "group": "APG-CoreData",
+    "bio": "Kristen works in Aladdin Data Warehouse and is interested in learning about ETFs more.",
+    "interests": ["Cooking", "Big Data", "Machine Learning", "Artificial Intelligence", "Dogs"],
+    "skills": ["Java", "HTML", "CSS", "Javascript", "Blockchain"]
+  },
+  {
+    "email": "pranita.sathe@blackrock.com",
+    "name":"Pranita Sathe",
+    "password":"sathe",
+    "school":"Rutgers Business School",
+    "position":"Intern",
+    "group":"APG-CTP",
+    "bio":"Pranita works in Security Lending and is interested in learning more about Data Science at BlackRock",
+    "interests": ["Big Data", "Hiking", "Artificial Intelligence", "Blockchain"],
+    "skills": ["Java", "HTML", "CSS", "Javascript", "R", "Python"]
+  }
+]
