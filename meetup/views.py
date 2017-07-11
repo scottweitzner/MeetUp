@@ -15,15 +15,16 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 
-    email = request.form.get('email', None)
-    password = request.form.get('password', None)
+    if request.method == 'POST':
+        email = request.form.get('email', None)
+        password = request.form.get('password', None)
 
-    if not User(email).verify_password(password):
-        flash('Invalid login.')
-    else:
-        session['user'] = email
-        flash('Logged in.')
-        return redirect(url_for('index'))
+        if not User(email).verify_password(password):
+            flash('Invalid login.')
+        else:
+            session['user'] = email
+            flash('Logged in.')
+            return redirect(url_for('index'))
 
     return render_template('login.html')
 
@@ -74,25 +75,32 @@ def profile():
 
     current_user_email = session.get('user')
 
-    current_user = User(current_user_email)
-    user_details = current_user.find()
+    if current_user_email is not None:
+        current_user = User(current_user_email)
+        user_details = current_user.find()
 
-    print(user_details)
+        name = user_details['name']
+        bio = user_details['bio']
+        school = user_details['school']
+        position = user_details['position']
+        group = user_details['group']
 
-    name = user_details['name']
-    bio = user_details['bio']
-    school = user_details['school']
-    position = user_details['position']
-    group = user_details['group']
+        print user_details
+        flash("HERE")
 
-    return render_template(
-        'profile.html',
-        name=name
-    )
+        return render_template(
+            'profile.html',
+            name=name
+        )
 
-@app.route('/create_event')
+    return render_template('not_authorized.html')
+
+
+@app.route('/create_event', methods=['GET', 'POST'])
 def create_event():
-    # do stuff here
+    if request.method == 'POST':
+        # do stuff here
+        render_template('index.html')
     return render_template('CreateEvent.html')
 
 #
