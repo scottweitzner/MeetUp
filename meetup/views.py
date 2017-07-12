@@ -1,4 +1,4 @@
-from flask import Flask, request, session, redirect, url_for, render_template, flash, jsonify
+from flask import Flask, request, session, redirect, url_for, render_template, flash
 from .models import User
 
 # import classes and functions from models an initialize app
@@ -8,8 +8,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    posts = []  # from the tutorial - will change
-    return render_template('index.html', posts=posts)
+    return render_template('index.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -68,14 +67,12 @@ def logout():
 #
 #     flash('Liked post.')
 #     return redirect(request.referrer)
-#
-#
 
 
 @app.route('/profile')
 def profile():
 
-    current_user_email = session.get('user')
+    current_user_email = session.get('user', None)
 
     if current_user_email is not None:
         current_user = User(current_user_email)
@@ -87,11 +84,18 @@ def profile():
         position = user_details['position']
         group = user_details['group']
 
-        print user_details
+        skills = current_user.get_skills()
+        interests = current_user.get_interests()
 
         return render_template(
             'profile.html',
-            name=name
+            name=name,
+            bio=bio,
+            school=school,
+            position=position,
+            group=group,
+            skills=skills,
+            interests=interests
         )
 
     return render_template('not_authorized.html')
@@ -99,10 +103,25 @@ def profile():
 
 @app.route('/create_event', methods=['GET', 'POST'])
 def create_event():
+
+    current_user_email = session.get('user', None)
+
+    if not current_user_email:
+        return render_template('not_authorized.html')
+
     if request.method == 'POST':
-        email = session['user']
-        title = request.form.get('')
-        render_template('index.html')
+        title = request.form.get('title')
+        event_type = request.form.get('type')
+        date = request.form.get('date')
+        time = request.form.get('time')
+        max_participants = request.form.get('max_participants')
+        description = request.form.get('description', None)
+
+        current_user = User(current_user_email)
+        current_user.create_event(title, event_type, date, time, max_participants, "" if description is None else description)
+
+        return render_template('index.html')
+
     return render_template('create_event.html')
 
 #

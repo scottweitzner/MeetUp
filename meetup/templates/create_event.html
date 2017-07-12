@@ -3,18 +3,18 @@
 
 <div class="container">
 
-    <form action="{{ url_for('create_event') }}" method="POST">
+    <form id="event_form" action="{{ url_for('create_event') }}" method="POST">
        
         {# Event Title: title #}
         <div class="input-field col s12">
-            <label for="Event_Title">Event Title</label>
-            <input id="Event_Title" type="text" name="title" class="validate" required>
+            <label for="title">Event Title</label>
+            <input id="title" type="text" name="title" required>
         </div>
 
         {# Event Type: type #}
          <div class="row">
              <div class="input-field col s12">
-                <select required>
+                <select required form="event_form" name="type">
                       <option value="" disabled selected class="grey-text text-lighten-1"> Choose Meeting Type</option>
                       <option value="coffee">Coffee (15-30 minutes)</option>
                       <option value="lunch">Lunch (30-60 minutes)</option>
@@ -35,7 +35,7 @@
 
             <div class="col s4">
                 <label for="date" class="active">Date</label>
-                <input id="date" type="date" class="datepicker" placeholder="mm/dd/yyyy" required>
+                <input id="date" type="date" class="datepicker" placeholder="mm/dd/yyyy" name="date" required>
                 <script>
                     $('.datepicker').pickadate({
                         selectMonths: true,
@@ -46,7 +46,7 @@
 
             <div class=" col s4">
                 <label for="time" class="active">Time</label>
-                <input id="time" type="time" class="timepicker" required>
+                <input id="time" type="time" class="timepicker" name="time" required>
 
                 <script >
                     $('.timepicker').pickatime({

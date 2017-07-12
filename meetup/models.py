@@ -29,15 +29,30 @@ class User:
     def get_skills(self):
         query = '''
         MATCH (u:User)-[:KNOWS]->(s:Skill) WHERE  u.email = {email}
-        RETURN s.type
+        RETURN s.type AS type
         '''
-        return graph.run(query, email=self.email).data()
+        skills = graph.run(query, email=self.email).data()
+        skill_list = []
+        for skill in skills:
+            skill_list.append(skill['type'])
+        return skill_list
 
-    def create_event(self, title, type, date, time, max_participants, description):
-        if description is None:
-            Event = Node('Event', title=title, type=type, date=date, time=time, max_participants=max_participants, description=description)
-        else:
-            Event = Node('Event', title=title, type=type, date=date, time=time, max_participants=max_participants, description=description)
+    def get_interests(self):
+        query = '''
+        MATCH (u:User)-[:INTERESTED_IN]->(s:Skill) WHERE  u.email = {email}
+        RETURN s.type AS type
+        '''
+        interests = graph.run(query, email=self.email).data()
+        interest_list = []
+        for interest in interests:
+            interest_list.append(interest['type'])
+        return interest_list
+
+    def create_event(self, title, event_type, event_date, event_time, max_participants, description):
+        user = self.find()
+        event = Node('Event', title=title, type=event_type, date=event_date, time=event_time, max_participants=max_participants, description=description)
+        rel = Relationship(user, 'HOSTING', event)
+        graph.merge(rel)
 
 
 def timestamp():

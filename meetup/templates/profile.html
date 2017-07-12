@@ -1,6 +1,21 @@
 {% extends "layout.html" %}
 {% block body %}
+    <br style="line-height: 50px">
+    <div class="container">
+        <h4 class="center-align">{{ name }}'s Profile</h4>
+        <h5>{{ group }} <i class="material-icons">play_arrow</i> {{ position }} </h5>
+        <p>{{ school }}</p>
+        <p>{{ bio }}</p>
+        <br/>
+        <h3>Skills:</h3>
+        {% for skill in skills %}
+            <div class="chip">{{ skill }}</div>
+        {% endfor %}
+        <h3>Interests:</h3>
+        {% for int in interests %}
+            <div class="chip">{{ int }}</div>
+        {% endfor %}
+    </div>
 
-    <h3>{{ name }}'s profile</h3>
 
 {% endblock %}
