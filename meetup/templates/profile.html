@@ -1,21 +1,26 @@
 {% extends "layout.html" %}
 {% block body %}
 
-    <script src=" {{ url_for('static', filename='utils.js') }} "></script>
+<script src=" {{ url_for('static', filename='utils.js') }} "></script>
 
 
-    <br style="line-height: 50px">
-    <div class="container">
-        <h4 class="center-align">{{ name }}'s Profile</h4>
-        <h5>{{ group }} <i class="material-icons">play_arrow</i> {{ position }} </h5>
-        <p>{{ school }}</p>
+<br style="line-height: 50px">
+<div class="container">
+    <div class="card-panel">
+
+        <div class="purple lighten-2" style="padding: 10px">
+            <h4 class="center-align white-text"> <i class="material-icons white-text">person_outline</i> {{ name }}</h4>
+        </div>
+
+        <h5> <i class="material-icons">people</i> {{ group }} <i class="material-icons">play_arrow</i> {{ position }} </h5>
+        <p> <i class="material-icons">school</i> {{ school }}</p>
         <p>{{ bio }}</p>
         <br/>
 
         <div class="row">
-            <h3>Skills:</h3>
+            <h5> <i class="material-icons">build</i> Skills:</h5>
             {% for skill in skills %}
-                <div class="chip">{{ skill }}</div>
+            <div class="chip">{{ skill }}</div>
             {% endfor %}
 
             <ul class="collapsible" data-collapsible="accordion">
@@ -26,15 +31,17 @@
                     <div class="collapsible-body">
                         <div class="row">
                             {% if skill_suggestions %}
-                                <p>Based on your bio we thought these skills may be relevant (you can also type to add some more)</p>
-                                <div class="chips chips-initial skills"></div>
+                            <p>Based on your bio we thought these skills may be relevant (you can also type to add some
+                                more)</p>
+                            <div class="chips chips-initial skills"></div>
                             {% else %}
-                                <i>No suggestions found</i>
-                                <div class="chips skills"></div>
+                            <i>No suggestions found</i>
+                            <div class="chips skills"></div>
                             {% endif %}
                         </div>
                         <div class="row">
-                            <a class="btn-floating btn-large waves-effect waves-light red" onclick="addNewSkills()"><i class="material-icons">add</i></a>
+                            <a class="btn-floating btn-large waves-effect waves-light red" onclick="addNewSkills()"><i
+                                    class="material-icons">add</i></a>
                         </div>
                     </div>
                 </li>
@@ -42,9 +49,9 @@
         </div>
 
         <div class="row">
-            <h3>Interests:</h3>
+            <h5> <i class="material-icons">palette</i> Interests:</h5>
             {% for int in interests %}
-                <div class="chip">{{ int }}</div>
+            <div class="chip">{{ int }}</div>
             {% endfor %}
 
             <ul class="collapsible" data-collapsible="accordion">
@@ -56,24 +63,25 @@
                     <div class="collapsible-body">
                         <div class="row">
                             {% if interest_suggestions %}
-                                <p>Based on your bio we thought these interests may be relevant (you can also type to add some more)</p>
-                                <div class="chips chips-initial interests"></div>
+                            <p>Based on your bio we thought these interests may be relevant (you can also type to add
+                                some more)</p>
+                            <div class="chips chips-initial interests"></div>
                             {% else %}
-                                <i>No suggestions found</i>
-                                <div class="chips interests"></div>
+                            <i>No suggestions found</i>
+                            <div class="chips interests"></div>
                             {% endif %}
                         </div>
                         <div class="row">
-                            <a class="btn-floating btn-large waves-effect waves-light red" onclick="addNewInterests()"><i class="material-icons">add</i></a>
+                            <a class="btn-floating btn-large waves-effect waves-light red"
+                               onclick="addNewInterests()"><i class="material-icons">add</i></a>
                         </div>
                     </div>
                 </li>
             </ul>
-
         </div>
-
-
     </div>
+
+</div>
 
 
 {% endblock %}
