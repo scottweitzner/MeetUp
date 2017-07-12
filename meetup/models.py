@@ -113,3 +113,29 @@ def filter_duplicate_interests(raw, interests):
             filtered.append(keyword)
 
     return filtered
+
+
+def get_all_events():
+    pass
+    query = '''
+    MATCH (u:User)-[:HOSTING]->(e:Event)
+    RETURN u.name AS host, e as Event
+    '''
+    raw = graph.run(query).data()
+
+    events = []
+    for obj in raw:
+        event_obj = obj['Event']
+        events.append(
+            {
+                'host': obj['host'],
+                'title': event_obj['title'],
+                'date': event_obj['date'],
+                'time': event_obj['time'],
+                'type': event_obj['type'],
+                'max_participants': event_obj['max_participants'],
+                'description': event_obj['description']
+            }
+        )
+
+    return events

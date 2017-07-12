@@ -16,13 +16,18 @@
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <!-- Various custom utils -->
+    <script src="{{ url_for('static', filename='utils.js') }}"></script>
+
 </head>
 
-<nav class="blue lighten-2">
+<nav class=" light-blue darken-2">
     <div class="nav-wrapper">
-        <a class="left" style="padding-left:25px; font-size:36px"> Beta </a>
+        <a class="left" style="padding-left:25px; font-size:36px" href="#"><img width="125px" src="static/logo.png"/></a>
         <ul class="right">
             <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li>&bull;</li>
+            <li><a href="{{ url_for('calendar') }}">Calendar</a></li>
             {% if not session.user %}
                 <li>&bull;</li>
                 <li><a href="{{ url_for('login') }}">Login</a></li>
@@ -38,16 +43,18 @@
     </div>
 </nav>
 
-{# ability to display toasts message toasts if we want #}
+{# ability to display toasts message toasts if we want#}
 
-{#{% with messages = get_flashed_messages() %}#}
-{#  {% if messages %}#}
-{#    <ul class=flashes>#}
-{#    {% for message in messages %}#}
-{#      <li>{{ message }}</li>#}
-{#    {% endfor %}#}
-{#    </ul>#}
-{#  {% endif %}#}
-{#{% endwith %}#}
+{% with messages = get_flashed_messages() %}
+  {% if messages and session.user%}
+    <ul class=flashes>
+    {% for message in messages %}
+      <script>
+        makeGoodToast( "{{ message }}" )
+      </script>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
 
 {% block body %}{% endblock %}

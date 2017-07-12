@@ -1,5 +1,5 @@
 from flask import Flask, request, session, redirect, url_for, render_template, flash
-from .models import User, get_skill_and_interest_suggestions, filter_duplicate_skills, filter_duplicate_interests
+from .models import User, get_skill_and_interest_suggestions, filter_duplicate_skills, filter_duplicate_interests, get_all_events
 
 
 # import classes and functions from models an initialize app
@@ -9,7 +9,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    events = get_all_events()
+    return render_template('index.html', events=events)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -25,7 +26,7 @@ def login():
             flash('Invalid login.')
         else:
             session['user'] = email
-            flash('Logged in.')
+            flash('Logged in!')
             return redirect(url_for('index'))
 
     return render_template('login.html', error=error)
@@ -76,6 +77,11 @@ def profile():
     return render_template('not_authorized.html')
 
 
+@app.route('/calendar')
+def calendar():
+    return render_template('calendar.html')
+
+
 @app.route('/create_event', methods=['GET', 'POST'])
 def create_event():
 
@@ -94,7 +100,7 @@ def create_event():
 
         current_user = User(current_user_email)
         current_user.create_event(title, event_type, date, time, max_participants, "" if description is None else description)
-
+        flash("Event Created!")
         return render_template('index.html')
 
     return render_template('create_event.html')
@@ -130,4 +136,13 @@ def add_interests():
         return profile()
 
     return render_template('profile.html')
+
+
+@app.route('/get_events')
+def get_events():
+    events = get_all_events()
+    render_template(
+        'calendar.html',
+        events=events
+    )
 

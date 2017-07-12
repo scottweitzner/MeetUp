@@ -6,6 +6,16 @@
     });
 </script>
 
+    {% for event in events %}
+        <p>{{ event.host }}</p>
+        <p>{{ event.title }}</p>
+        <p>{{ event.type }}</p>
+        <p>{{ event.date }}</p>
+        <p>{{ event.time }}</p>
+        <p>{{ event.description }}</p>
+        <p>{{ event.max_participants }}</p>
+    {% endfor %}
+
     <style>
     .carousel-item{
         min-height: 350px;

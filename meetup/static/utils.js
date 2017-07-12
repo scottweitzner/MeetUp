@@ -1,5 +1,5 @@
 /**
- * Created by ScottWeitzner on 7/11/17.
+ * Created by Scott Weitzner on 7/11/17.
  */
 
 function makeErrorToast(message) {
