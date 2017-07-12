@@ -79,7 +79,11 @@ def profile():
 
 @app.route('/calendar')
 def calendar():
-    return render_template('calendar.html')
+    events = get_all_events();
+    return render_template(
+        'calendar.html',
+        events=events
+    )
 
 
 @app.route('/create_event', methods=['GET', 'POST'])
@@ -137,12 +141,4 @@ def add_interests():
 
     return render_template('profile.html')
 
-
-@app.route('/get_events')
-def get_events():
-    events = get_all_events()
-    render_template(
-        'calendar.html',
-        events=events
-    )
 

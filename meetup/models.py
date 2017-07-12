@@ -116,7 +116,6 @@ def filter_duplicate_interests(raw, interests):
 
 
 def get_all_events():
-    pass
     query = '''
     MATCH (u:User)-[:HOSTING]->(e:Event)
     RETURN u.name AS host, e as Event

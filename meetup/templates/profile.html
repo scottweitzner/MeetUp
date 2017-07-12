@@ -3,7 +3,6 @@
 
 <script src=" {{ url_for('static', filename='utils.js') }} "></script>
 
-
 <br style="line-height: 50px">
 <div class="container">
     <div class="card-panel">
@@ -12,15 +11,17 @@
             <h4 class="center-align white-text"> <i class="material-icons white-text">person_outline</i> {{ name }}</h4>
         </div>
 
-        <h5> <i class="material-icons">people</i> {{ group }} <i class="material-icons">play_arrow</i> {{ position }} </h5>
-        <p> <i class="material-icons">school</i> {{ school }}</p>
+        <h5> <i class="material-icons">people</i> {{ group }} <i class="material-icons">keyboard_arrow_right</i> {{ position }} </h5>
+        <p> <i class="material-icons">school</i> &nbsp; {{ school }}</p>
         <p>{{ bio }}</p>
         <br/>
 
         <div class="row">
             <h5> <i class="material-icons">build</i> Skills:</h5>
             {% for skill in skills %}
-            <div class="chip">{{ skill }}</div>
+
+            <div class="chip blue lighten-3">{{ skill }}</div>
+
             {% endfor %}
 
             <ul class="collapsible" data-collapsible="accordion">
@@ -51,7 +52,7 @@
         <div class="row">
             <h5> <i class="material-icons">palette</i> Interests:</h5>
             {% for int in interests %}
-            <div class="chip">{{ int }}</div>
+            <div class="chip green lighten-3">{{ int }}</div>
             {% endfor %}
 
             <ul class="collapsible" data-collapsible="accordion">

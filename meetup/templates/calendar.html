@@ -4,21 +4,35 @@
 <script src='static/jquery.min.js'></script>
 <script src='static/moment.min.js'></script>
 <script src='static/fullcalendar.js'></script>
-   <script type="text/javascript" src="js/plugins.min.js"></script>
-    <!--custom-script.js - Add your own theme custom JS-->
-    <script type="text/javascript" src="js/custom-script.js"></script>
+
 
 
 <br>
 
+{% for event in events %}
+        <p>{{ event.host }}</p>
+        <p>{{ event.title }}</p>
+        <p>{{ event.type }}</p>
+        <p>{{ event.date }}</p>
+        <p>{{ event.time }}</p>
+        <p>{{ event.description }}</p>
+        <p>{{ event.max_participants }}</p>
+    {% endfor %}
+
 <div class="container">
 <div id="full-calendar"  >
+
+
 
                 <div class="row">
                   <div class="col s12" id='calendar' style="width: 900px"></div>
                 </div>
 
                     <script>
+
+                        {% for event in events %}
+                            console.log("here")
+                        {% endfor %}
 
                    
                             $('#calendar').fullCalendar({
