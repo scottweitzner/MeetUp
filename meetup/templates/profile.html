@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
+
+    <script src=" {{ url_for('static', filename='utils.js') }} "></script>
+
+
     <br style="line-height: 50px">
     <div class="container">
         <h4 class="center-align">{{ name }}'s Profile</h4>
@@ -7,14 +11,68 @@
         <p>{{ school }}</p>
         <p>{{ bio }}</p>
         <br/>
-        <h3>Skills:</h3>
-        {% for skill in skills %}
-            <div class="chip">{{ skill }}</div>
-        {% endfor %}
-        <h3>Interests:</h3>
-        {% for int in interests %}
-            <div class="chip">{{ int }}</div>
-        {% endfor %}
+
+        <div class="row">
+            <h3>Skills:</h3>
+            {% for skill in skills %}
+                <div class="chip">{{ skill }}</div>
+            {% endfor %}
+
+            <ul class="collapsible" data-collapsible="accordion">
+                <li>
+                    <div class="collapsible-header" onclick="createSkillSuggestionTags({{ skill_suggestions|safe }})"><i
+                            class="material-icons">add</i>Add Skills
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            {% if skill_suggestions %}
+                                <p>Based on your bio we thought these skills may be relevant (you can also type to add some more)</p>
+                                <div class="chips chips-initial skills"></div>
+                            {% else %}
+                                <i>No suggestions found</i>
+                                <div class="chips skills"></div>
+                            {% endif %}
+                        </div>
+                        <div class="row">
+                            <a class="btn-floating btn-large waves-effect waves-light red" onclick="addNewSkills()"><i class="material-icons">add</i></a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row">
+            <h3>Interests:</h3>
+            {% for int in interests %}
+                <div class="chip">{{ int }}</div>
+            {% endfor %}
+
+            <ul class="collapsible" data-collapsible="accordion">
+                <li>
+                    <div class="collapsible-header"
+                         onclick="createInterestSuggestionTags({{ interest_suggestions|safe }})"><i
+                            class="material-icons">add</i>Add Interests
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="row">
+                            {% if interest_suggestions %}
+                                <p>Based on your bio we thought these interests may be relevant (you can also type to add some more)</p>
+                                <div class="chips chips-initial interests"></div>
+                            {% else %}
+                                <i>No suggestions found</i>
+                                <div class="chips interests"></div>
+                            {% endif %}
+                        </div>
+                        <div class="row">
+                            <a class="btn-floating btn-large waves-effect waves-light red" onclick="addNewInterests()"><i class="material-icons">add</i></a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+
+
     </div>
 
 

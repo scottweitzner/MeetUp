@@ -11,60 +11,32 @@
         min-height: 350px;
         min-width: 400px;
     }
-
     </style>
 
 
 <div class="container">
-<br style="line-height: 50px">
-<div class="carousel" data-indicators="true" style="min-height: 500px">
     <h4 class="center-align">Your Events</h4>
-    <a class="carousel-item card">
-        <div class="card-content">
-             <span class="card-title activator grey-text text-darken-4">Event Title<i class="material-icons right">more_vert</i></span>
-            <p><b>Type: </b></p>
-            <p><b>Description:</b></p>
-            <p><b>Date/Time:</b></p>
-        </div>
-        <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Event Title<i class="material-icons right">close</i></span>
-            <p><b>Description:</b> Desciption about the event goes here.</p>
-            <p><b>Date/Time:</b></p>
-            <p><b>Host:</b></p>
-            <p><b>Availability:</b></p>
-        </div>
-    </a>
-    <a class="carousel-item card">
-        <div class="card-content">
-             <span class="card-title activator grey-text text-darken-4">Event Title<i class="material-icons right">more_vert</i></span>
-            <p><b>Type: </b></p>
-            <p><b>Description:</b></p>
-            <p><b>Date/Time:</b></p>
-        </div>
-        <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Event Title<i class="material-icons right">close</i></span>
-            <p><b>Description:</b> Desciption about the event goes here.</p>
-            <p><b>Date/Time:</b></p>
-            <p><b>Host:</b></p>
-            <p><b>Availability:</b></p>
-        </div>
-    </a>
-    <a class="carousel-item card">
-        <div class="card-content">
-             <span class="card-title activator grey-text text-darken-4">Event Title<i class="material-icons right">more_vert</i></span>
-            <p><b>Type: </b></p>
-            <p><b>Description:</b></p>
-            <p><b>Date/Time:</b></p>
-        </div>
-        <div class="card-reveal">
-            <span class="card-title grey-text text-darken-4">Event Title<i class="material-icons right">close</i></span>
-            <p><b>Description:</b> Description about the event goes here.</p>
-            <p><b>Date/Time:</b></p>
-            <p><b>Host:</b></p>
-            <p><b>Availability:</b></p>
-        </div>
-    </a>
+<div class="carousel" data-indicators="true" style="min-height:500px">
+    <div class="carousel" data-indicators="true">
+
+        {%  for n in range(5) %}
+            <a class="carousel-item card">
+                <div class="card-content">
+                     <span class="card-title activator grey-text text-darken-4">Event Title<i class="material-icons right">more_vert</i></span>
+                    <p><b>Type: </b></p>
+                    <p><b>Description:</b></p>
+                    <p><b>Date/Time:</b></p>
+                </div>
+                <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4">Event Title<i class="material-icons right">close</i></span>
+                    <p><b>Description:</b> Description about the event goes here.</p>
+                    <p><b>Date/Time:</b></p>
+                    <p><b>Host:</b></p>
+                    <p><b>Availability:</b></p>
+                </div>
+            </a>
+        {%  endfor %}
+
   </div>
-</div>
 {% endblock %}
 

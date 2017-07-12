@@ -23,11 +23,11 @@
         <a class="left" style="padding-left:25px; font-size:36px"> Beta </a>
         <ul class="right">
             <li><a href="{{ url_for('index') }}">Home</a></li>
-            git <li>&bull;</li>
             {% if not session.user %}
-                <li><a href="{{ url_for('login') }}">Login</a></li>
                 <li>&bull;</li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
             {% else %}
+                <li>&bull;</li>
                 <li><a href="{{ url_for('profile') }}">Profile</a></li>
                 <li>&bull;</li>
                 <li><a href="{{ url_for('create_event') }}">Create Event</a></li>
