@@ -1,24 +1,24 @@
 [
   {
-    "email": "kristen.gee@blackrock.com",
-    "name": "Kristen Gee",
-    "password": "kristen",
-    "school": "University of Pennsylvania",
-    "position": "Intern",
-    "group": "APG-CoreData",
-    "bio": "Kristen works in Aladdin Data Warehouse and is interested in learning about ETFs more.",
-    "interests": ["Cooking", "Big Data", "Machine Learning", "Artificial Intelligence", "Dogs"],
-    "skills": ["Java", "HTML", "CSS", "Javascript", "Blockchain"]
+    "email": "connor.flanagan@blackrock.com",
+    "name":"Connor Flanagan",
+    "password":"connor",
+    "school":"University of Richmond",
+    "position":"Intern",
+    "group":"ACS",
+    "bio":"Connor works on the Investment Tools bucket within Aladdin Client Services. Here he assits both internal and external PMs with issues using the Aladdin product suite.",
+    "interests": ["Finance", "ETFs", "Fantasy Sports", "Quantum Computing", "Bitcoin", "Long Walks on the Beach", "Blockchain" ],
+    "skills": ["Knitting", "Reading", "Valuation Methods", "Snowboarding", "Chess"]
   },
   {
-    "email": "pranita.sathe@blackrock.com",
-    "name":"Pranita Sathe",
-    "password":"sathe",
-    "school":"Rutgers Business School",
+    "email": "sharon.song@blackrock.com",
+    "name":"Sharon Song",
+    "password":"sharon",
+    "school":"University of Pennsylvania",
     "position":"Intern",
-    "group":"APG-CTP",
-    "bio":"Pranita works in Security Lending and is interested in learning more about Data Science at BlackRock",
-    "interests": ["Big Data", "Hiking", "Artificial Intelligence", "Blockchain"],
-    "skills": ["Java", "HTML", "CSS", "Javascript", "R", "Python"]
+    "group":"ACS",
+    "bio":"Sharon works on the Investment Tools bucket within Aladdin Client Services. Here she assists both internal and external PMs with issues using the Aladdin product suite.",
+    "interests": ["Photography", "data science", "running", "netflix", "healthcare", "cooking", "blockchain" ],
+    "skills": ["digital design", "writing", "Aladdin", "Snowboarding", "Checkers"]
   }
 ]

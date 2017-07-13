@@ -27,9 +27,9 @@ with open('USERS.json') as data_file:
         for interest in user['interests']:
             Interest = Node("Skill", type=interest)
             rel = Relationship(User, 'INTERESTED_IN', Interest)
-            graph.merge(rel)
+            # graph.merge(rel)
 
         for skill in user['skills']:
             Skill = Node("Skill", type=skill)
             rel = Relationship(User, "KNOWS", Skill)
-            graph.merge(rel)
+            # graph.merge(rel)

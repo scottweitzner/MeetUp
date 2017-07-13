@@ -1,52 +1,186 @@
 {% extends "layout.html" %}
 {% block body %}
-<script>
-    $(document).ready(function(){
-      $('.carousel').carousel();
-    });
-</script>
 
-    {% for event in events %}
-        <p>{{ event.host }}</p>
-        <p>{{ event.title }}</p>
-        <p>{{ event.type }}</p>
-        <p>{{ event.date }}</p>
-        <p>{{ event.time }}</p>
-        <p>{{ event.description }}</p>
-        <p>{{ event.max_participants }}</p>
-    {% endfor %}
+    <script>
+        $(document).ready(function(){
+            $('.car1.carousel').carousel();
+        });
+
+         current_available_events = {{ events|tojson|safe }};
+        {% if session.user %}
+         events_going_to = {{ going|tojson|safe }};
+         recommended_events = {{ recommended|tojson|safe }}
+        {% endif %}
+    </script>
 
     <style>
-    .carousel-item{
-        min-height: 350px;
-        min-width: 400px;
-    }
+        .carousel-item{
+            min-height: 350px;
+            min-width: 400px;
+        }
     </style>
 
+    <br>
+    <div class="container">
+        <h4 class="center-align">Planned Events</h4>
+    </div>
+
+<div class="container" style="margin-top: -50px">
+    <div class="carousel car1" data-indicators="true" style="min-height:500px" >
+
+        {% if not events %}
+            {% include 'no_event.html' %}
+        {% endif  %}
+
+        {%  for e in events %}
+            <div class="carousel-item card">
+                <div class="card-content">
+                    {% if e.type == 'coffee' %}<i class="material-icons">free_breakfast</i> {% endif %}
+                    {% if e.type == 'lunch' %}<i class="material-icons">restaurant</i> {% endif %}
+                    {% if e.type == 'meeting' %}<i class="material-icons">people_outline</i> {% endif %}
+
+                    <span class="card-title activator grey-text text-darken-4">{{ e.title }}
+                        <i class="material-icons right">more_vert</i>
+                    </span>
+                    <p><b>Type: </b>{{ e.type }} </p>
+                    <p><b>Date/Time: </b>{{ e.date }} @ {{ e.time }}</p>
+                </div>
+
+                <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4">{{ e.title }}
+                        <i class="material-icons right">close</i>
+                    </span>
+                    <p><b>Host: </b>{{ e.host }}</p>
+                    <p><b>Description:</b> {{ e.description }}</p>
+                    <p><b>Availability:</b> {{ e.max_participants }}</p>
+                                
+                </div>
+                <br>
+                {% if session.user %}
+                    <div class="center">
+                        <a class="btn waves-effect purple white-text" onclick="attendEvent( {{ loop.index }}, this, EventType.GENERAL );">Attend</a>
+                    </div>
+                {% endif %}
+            </div>
+        {%  endfor %}
+ 
+    </div>
+</div>
+
+{% if session.user %}
 
 <div class="container">
-    <h4 class="center-align">Your Events</h4>
-<div class="carousel" data-indicators="true" style="min-height:500px">
-    <div class="carousel" data-indicators="true">
+    <h4 class="center-align">Recommended Events</h4>
+</div>
+<div class="container" style="margin-top: -50px">
+    <div class="carousel car2" data-indicators="true" style="min-height:500px" >
 
-        {%  for n in range(5) %}
-            <a class="carousel-item card">
+        {% if not recommended %}
+            {% include 'no_event.html' %}
+        {% endif  %}
+
+        {%  for e in recommended %}
+            {% if not session.user or session.user != e.host_email %}
+            <div class="carousel-item card">
                 <div class="card-content">
-                     <span class="card-title activator grey-text text-darken-4">Event Title<i class="material-icons right">more_vert</i></span>
-                    <p><b>Type: </b></p>
-                    <p><b>Description:</b></p>
-                    <p><b>Date/Time:</b></p>
-                </div>
-                <div class="card-reveal">
-                    <span class="card-title grey-text text-darken-4">Event Title<i class="material-icons right">close</i></span>
-                    <p><b>Description:</b> Description about the event goes here.</p>
-                    <p><b>Date/Time:</b></p>
-                    <p><b>Host:</b></p>
-                    <p><b>Availability:</b></p>
-                </div>
-            </a>
-        {%  endfor %}
+                    <i class="material-icons yellow-text purple lighten-1-text" style="border-radius: 20px">star</i>
+                    {% if e.type == 'coffee' %}<i class="material-icons">free_breakfast</i> {% endif %}
+                    {% if e.type == 'lunch' %}<i class="material-icons">restaurant</i> {% endif %}
+                    {% if e.type == 'meeting' %}<i class="material-icons">people_outline</i> {% endif %}
 
-  </div>
+                    <span class="card-title activator grey-text text-darken-4">{{ e.title }}
+                        <i class="material-icons right">more_vert</i>
+                    </span>
+                    <p><b>Type: </b>{{ e.type }} </p>
+                    <p><b>Date/Time: </b>{{ e.date }} @ {{ e.time }}</p>
+                </div>
+
+                <div class="card-reveal yellow">
+                    <span class="card-title grey-text text-darken-4">{{ e.title }}
+                        <i class="material-icons right">close</i>
+                    </span>
+                    <p><b>Host: </b>{{ e.host }}</p>
+                    <p><b>Description:</b> {{ e.description }}</p>
+                    <p><b>Availability:</b> {{ e.max_participants }}</p>
+                    <p><b>Reason for Recommendation:</b>
+                        <br>
+                        {% for reason in e.reasons %}
+                            &bull; &nbsp;{{ reason }}<br>
+                        {% endfor %}
+                    </p>
+                </div>
+                <br>
+                <div class="center">
+                    <a class="btn waves-effect purple white-text" onclick="attendEvent( {{ loop.index }}, this, EventType.RECOMMENDED );">Attend</a>
+                </div>
+            </div>
+            {% endif %}
+        {%  endfor %}
+ 
+    </div>
+</div>
+
+    <script>
+        $(document).ready(function(){
+            $('.car2.carousel').carousel();
+        });
+    </script>
+
+<div class="container">
+    <h4 class="center-align">Events I'm Going To</h4>
+</div>
+<div class="container" style="margin-top: -50px">
+    <div class="carousel car3" data-indicators="true" style="min-height:500px" >
+
+        {% if not going %}
+            {% include 'no_event.html' %}
+        {% endif  %}
+
+        {%  for e in going %}
+
+            <div class="carousel-item card">
+                <div class="card-content">
+                    {% if e.type == 'coffee' %}<i class="material-icons">free_breakfast</i> {% endif %}
+                    {% if e.type == 'lunch' %}<i class="material-icons">restaurant</i> {% endif %}
+                    {% if e.type == 'meeting' %}<i class="material-icons">people_outline</i> {% endif %}
+
+                    <span class="card-title activator grey-text text-darken-4">{{ e.title }}
+                        <i class="material-icons right">more_vert</i>
+                    </span>
+                    <p><b>Type: </b>{{ e.type }} </p>
+                    <p><b>Date/Time: </b>{{ e.date }} @ {{ e.time }}</p>
+                </div>
+
+                <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4">{{ e.title }}
+                        <i class="material-icons right">close</i>
+                    </span>
+                    <p><b>Host: </b>{{ e.host }}</p>
+                    <p><b>Description:</b> {{ e.description }}</p>
+                    <p><b>Availability:</b> {{ e.max_participants }}</p>
+                                
+                </div>
+                <br>
+                <div class="center">
+                    <a class="btn waves-effect purple white-text" onclick="noLongerAttendEvent( {{ loop.index }}, this );">Cancel</a>
+                </div>
+            </div>
+        {%  endfor %}
+ 
+    </div>
+</div>
+
+    <script>
+        $(document).ready(function(){
+            $('.car3.carousel').carousel();
+        });
+    </script>
+{% endif %}
+
+
+
+
+
+
 {% endblock %}
 

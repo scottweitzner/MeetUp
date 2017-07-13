@@ -1,16 +1,23 @@
 from flask import Flask, request, session, redirect, url_for, render_template, flash
 from .models import User, get_skill_and_interest_suggestions, filter_duplicate_skills, filter_duplicate_interests, get_all_events
 
-
-# import classes and functions from models an initialize app
-
 app = Flask(__name__)
 
 
 @app.route('/')
 def index():
+
+    current_user_email = session.get('user', None)
     events = get_all_events()
-    return render_template('index.html', events=events)
+
+    if current_user_email is None:
+        return render_template('index.html', events=events)
+    else:
+        current_user = User(current_user_email)
+        going_to = current_user.get_events_going_to()
+        not_going_to = current_user.get_events_not_going_to()
+        recommended = current_user.get_recommended_events()
+        return render_template('index.html', events=not_going_to, going=going_to, recommended=recommended)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -105,7 +112,8 @@ def create_event():
         current_user = User(current_user_email)
         current_user.create_event(title, event_type, date, time, max_participants, "" if description is None else description)
         flash("Event Created!")
-        return render_template('index.html')
+
+        return redirect(url_for('index'))
 
     return render_template('create_event.html')
 
@@ -123,7 +131,7 @@ def add_skills():
         current_user.add_skills(skills)
         return profile()
 
-    return render_template('profile.html')
+    return redirect(url_for('profile'))
 
 
 @app.route('/add_interests', methods=['POST'])
@@ -137,8 +145,40 @@ def add_interests():
         current_user = User(current_user_email)
         interests = request.json['tags']
         current_user.add_interests(interests)
-        return profile()
 
-    return render_template('profile.html')
+    return redirect(url_for('profile'))
 
+
+@app.route('/attend_event', methods=['POST'])
+def attend_event():
+    current_user_email = session.get('user', None)
+
+    if not current_user_email:
+        return render_template('not_authorized.html')
+
+    if request.method == 'POST':
+        current_user = User(current_user_email)
+        event_title = request.json.get('title')
+        event_date = request.json.get('date')
+        event_time = request.json.get('time')
+        current_user.attend_event(event_title, event_date, event_time)
+
+    return redirect(url_for('index'))
+
+
+@app.route('/no_longer_attend_event', methods=['POST'])
+def no_longer_attend_event():
+    current_user_email = session.get('user', None)
+
+    if not current_user_email:
+        return render_template('not_authorized.html')
+
+    if request.method == 'POST':
+        current_user = User(current_user_email)
+        event_title = request.json.get('title')
+        event_date = request.json.get('date')
+        event_time = request.json.get('time')
+        current_user.remove_from_event(event_title, event_date, event_time)
+
+    return redirect(url_for('index'))
 

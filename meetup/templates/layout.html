@@ -2,16 +2,16 @@
 <title>Research Demo</title>
 <head>
     <!-- JQuery -->
-    <script src="https://cdn.jsdelivr.net/jquery/3.2.1/jquery.min.js"></script>
+    <script src=" {{ url_for('static', filename='jquery.min.js') }} "></script>
 
     <!-- Materialize JS -->
     <script src=" {{ url_for('static', filename='materialize.js') }} "></script>
 
     <!-- Materialize CSS: Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+    <link rel="stylesheet" href=" {{ url_for('static', filename='materialize.min.css') }} ">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png')}}">
+    <link rel="shortcut icon" href=" {{ url_for('static', filename='favicon.png') }} ">
 
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

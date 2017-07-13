@@ -2,6 +2,8 @@
 {% block body %}
 
 <div class="container">
+<div class="card-panel" style="padding: 5px 20px 10px 20px; margin-top: 20px">
+    <div class="card-title"><h4><i class="material-icons" style="font-size: 40px; vertical-align: middle !important;">event</i> Create an Event</h4></div>
 
     <form id="event_form" action="{{ url_for('create_event') }}" method="POST">
        
@@ -71,20 +73,19 @@
         </div>
 
         {# Description: description #}
-        <div class="row">
+        <div class="row" style="margin-bottom: 5px">
             <div class="input-field col s12">
                 <label for="textarea">Description</label>
                 <textarea id="textarea" class="materialize-textarea" name="description"></textarea>
             </div>
         </div>
-
         {# Submit Button #}
         <button class="btn waves-effect waves-light blue lighten-2" type="submit" name="action">Create Event
             <i class="material-icons right">send</i>
         </button>
     </form>
 
-
+</div>
 </div>
 
 

@@ -71,6 +71,83 @@ class User:
             rel = Relationship(user, 'INTERESTED_IN', new_interest)
             graph.merge(rel)
 
+    def attend_event(self, title, event_date, event_time):
+        user = self.find()
+        query = '''
+        MATCH (e:Event) WHERE e.title={title} AND e.date={date} AND e.time={time}
+        RETURN e
+        '''
+        event = graph.run(query, title=title, date=event_date, time=event_time)
+
+        rel = Relationship(user, 'ATTENDING', event)
+        graph.merge(rel)
+
+    def remove_from_event(self, title, event_date, event_time):
+        user = self.find()
+        query = '''
+        MATCH (u:User)-[r:ATTENDING]->(e:Event) WHERE e.title={title} AND e.date={date} AND e.time={time} AND u.email = {email}
+        DETACH DELETE r
+        '''
+        graph.run(query, title=title, date=event_date, time=event_time, email=user['email'])
+
+    def get_events_going_to(self):
+        user = self.find()
+        query = '''
+        MATCH (u:User)-[:ATTENDING]->(e:Event)<-[:HOSTING]-(host:User) WHERE u.email={user_email}
+        RETURN host.name AS host_name, host.email AS host_email, e AS Event
+        '''
+        raw = graph.run(query, user_email=user['email']).data()
+        return raw_to_event_list(raw)
+
+    def get_events_not_going_to(self):
+        user = self.find()
+        query = '''
+                MATCH (u:User)-[:ATTENDING]->(e:Event) WHERE u.email={email}
+                WITH collect(DISTINCT e) as events_attended
+                MATCH (host:User)-[:HOSTING]->(event:Event)
+                WHERE NOT event IN events_attended AND host.email <> {email}
+                RETURN host.name AS host_name, host.email AS host_email, event AS Event
+                '''
+
+        raw = graph.run(query, email=user['email']).data()
+
+        print raw
+        return raw_to_event_list(raw)
+
+    def get_recommended_events(self):
+        user = self.find()
+        query = '''
+                MATCH (u:User)-[:INTERESTED_IN]->(s:Skill)<-[:KNOWS]-(host:User) WHERE u.email={email}
+                MATCH (host)-[:HOSTING]->(e:Event) WHERE NOT (u)-->(e)
+                RETURN host.name AS host_name, host.email AS host_email, e as Event , COLLECT(s.type) AS skills
+                '''
+
+        raw = graph.run(query, email=user['email']).data()
+
+        events = []
+        for obj in raw:
+            event_obj = obj['Event']
+
+            reasons = []
+            print obj
+            for reason in obj['skills']:
+                reasons.append('you have an interest in ' + reason + ' and ' + obj['host_name'] + ' has that as a skill' )
+
+            events.append(
+                {
+                    'host': obj['host_name'],
+                    'host_email': obj['host_email'],
+                    'title': event_obj['title'],
+                    'date': event_obj['date'],
+                    'time': event_obj['time'],
+                    'type': event_obj['type'],
+                    'max_participants': event_obj['max_participants'],
+                    'description': event_obj['description'],
+                    'reasons': reasons
+                }
+            )
+        return events
+
 
 def timestamp():
     epoch = datetime.utcfromtimestamp(0)
@@ -118,16 +195,20 @@ def filter_duplicate_interests(raw, interests):
 def get_all_events():
     query = '''
     MATCH (u:User)-[:HOSTING]->(e:Event)
-    RETURN u.name AS host, e as Event
+    RETURN u.name AS host_name, u.email AS host_email, e as Event
     '''
     raw = graph.run(query).data()
+    return raw_to_event_list(raw)
 
+
+def raw_to_event_list(raw):
     events = []
     for obj in raw:
         event_obj = obj['Event']
         events.append(
             {
-                'host': obj['host'],
+                'host': obj['host_name'],
+                'host_email': obj['host_email'],
                 'title': event_obj['title'],
                 'date': event_obj['date'],
                 'time': event_obj['time'],
@@ -136,5 +217,6 @@ def get_all_events():
                 'description': event_obj['description']
             }
         )
-
     return events
+
+
