@@ -1,4 +1,6 @@
-hackathon
-.idea
+hackathon/
+project_setup/
+.idea/
+.DS_Store
 blackrockathon.iml
 constants.py
