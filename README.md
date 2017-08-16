@@ -15,6 +15,10 @@
 
   ```pip install -r requirements.txt```
 * Database configuration
-You'll need to setup a Neo4j instance. I used grapheneDB but any service will do
+  - You'll need to setup a Neo4j instance
+  - I used grapheneDB but any service will do
+* Watson configuration
+  - You'll need an account on IBM Bluemix and to setup a Natural Language Understanding instance.
+  - rename the `constants_example.py` to `contants.py` and add in your information
 * Deployment instructions
 Run with: ```python run.py```
