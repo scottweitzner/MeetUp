@@ -4,3 +4,5 @@ project_setup/
 .DS_Store
 blackrockathon.iml
 constants.py
+*.pyc
+watson_data_store.dat
