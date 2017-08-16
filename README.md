@@ -13,7 +13,7 @@
   
 * Download Requirements
 
-```pip install -r requirements.txt```
+  ```pip install -r requirements.txt```
 * Database configuration
 You'll need to setup a Neo4j instance. I used graphenDB but any service will do
 * Deployment instructions
