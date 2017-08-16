@@ -15,6 +15,6 @@
 
   ```pip install -r requirements.txt```
 * Database configuration
-You'll need to setup a Neo4j instance. I used graphenDB but any service will do
+You'll need to setup a Neo4j instance. I used grapheneDB but any service will do
 * Deployment instructions
 Run with: ```python run.py```
