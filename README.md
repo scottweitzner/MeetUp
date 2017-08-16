@@ -7,9 +7,9 @@
 
   ```pip install virtualenv```
   
-  ```virtualenv meetup```
+  ```virtualenv meetup_venv```
   
-  ```source meetup/bin/activate```
+  ```source meetup_venv/bin/activate```
   
 * Download Requirements
 
