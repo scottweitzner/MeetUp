@@ -1,29 +1,19 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
-### BlackRock Hackahton ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+### MeetUp ###
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
+* Clone the repository
+* Start a new python virtual environment
+  '''
+  pip install virtualenv
+  virtualenv meetup
+  source meetup/bin/activate
+  '''
+* Download Requirements
+```pip install -r requirements.txt``
 * Database configuration
-* How to run tests
+You'll need to setup a Neo4j instance. I used graphenDB but any service will do
 * Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+Run with ```python run.py```
