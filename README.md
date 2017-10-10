@@ -19,6 +19,6 @@
   - I used grapheneDB but any service will do
 * Watson configuration
   - You'll need an account on IBM Bluemix and to setup a Natural Language Understanding instance.
-  - rename the `constants_example.py` to `contants.py` and add in your information
+  - rename the `constants_example.py` to `constants.py` and add in your information
 * Deployment instructions
 Run with: ```python run.py```
